@@ -50,6 +50,40 @@ Mensajes de error:
 
 - Si el numero de telefono contiene letras o caracteres invalidos "Numero de telefono inválido"
 - Si no existe el contacto "Contacto no encontrado"
-  
-    
+
+**Metodo Get a /api/cumple?nombre=[nombreAmigo]**
+
+- ej: /api/cumple?nombre=Gigi
+
+Respuesta:
+
+- Datos en formato json del registro
+
+Mensajes de error: 
+
+- Si no existe el contacto "Contacto no encontrado"
+
+**Metodo Get a /api/cumples**
+
+- ej: /api/cumples
+
+Respuesta:
+
+- Datos en formato json de todos los registros
+
+Mensajes de error: 
+
+- Si no hay registros "No existen cumpleaños registrados"
+
+**Metodo Delete a /api/cumple?nombre=[nombreAmigo]**
+
+- ej: /api/cumple?nombre=Gigi
+
+Respuesta:
+
+- "Cumple borrado correctamente"
+
+Mensajes de error: 
+
+- Si no existe el contacto "Contacto no encontrado"
  
