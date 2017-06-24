@@ -20,44 +20,44 @@ import com.example.felizcumple.services.FriendServices;
 
 @Controller
 public class FriendsController {
-	
-	@Autowired
-	FriendsRepository friendRepo;
 
-	@RequestMapping(value = "/api/cumples", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Autowired
+    FriendsRepository friendRepo;
+
+    @Autowired
+    private FriendServices friendServices;
+
+    @RequestMapping(value = "/api/cumples", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<FriendEntity>> obtenerAmigos() {
-        return new ResponseEntity<Collection<FriendEntity>>(friendRepo.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(friendRepo.findAll(), HttpStatus.OK);
     }
-	
-	@RequestMapping(value = "/api/cumple", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RespuestaEntity> registrarCumple( @RequestParam String nombre,
-            												@RequestParam String fechaNacimiento,
-            												@RequestParam String telefono) throws ParseException {
-		RespuestaEntity respuesta = new RespuestaEntity();
-		FriendServices friendServices = new FriendServices();
-		respuesta.setMensaje(friendServices.registerFriend(nombre, telefono, fechaNacimiento));
-        return new ResponseEntity<RespuestaEntity>(respuesta, HttpStatus.OK);
+
+    @RequestMapping(value = "/api/cumple", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaEntity> registrarCumple(@RequestParam String nombre,
+                                                           @RequestParam String fechaNacimiento,
+                                                           @RequestParam String telefono) throws ParseException {
+        RespuestaEntity respuesta = new RespuestaEntity();
+        respuesta.setMensaje(friendServices.registerFriend(nombre, telefono, fechaNacimiento));
+        return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
-	
-	@RequestMapping(value = "/api/cumple", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @RequestMapping(value = "/api/cumple", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FriendEntity> obtenerCumplePorAmigo(@RequestParam String nombre) {
-        return new ResponseEntity<FriendEntity>(friendRepo.findFriendEntityByNombre(nombre), HttpStatus.OK);
+        return new ResponseEntity<>(friendRepo.findFriendEntityByNombre(nombre), HttpStatus.OK);
     }
-	
-	@RequestMapping(value = "/api/cumple", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RespuestaEntity> actualizarTelefono(@RequestParam String nombre, 
-    															@RequestParam String telefono) {
-		RespuestaEntity respuesta = new RespuestaEntity();
-		FriendServices friendServices = new FriendServices();
-		respuesta.setMensaje(friendServices.deleteFriend(nombre));
-        return new ResponseEntity<RespuestaEntity>(respuesta, HttpStatus.OK);
+
+    @RequestMapping(value = "/api/cumple", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RespuestaEntity> actualizarTelefono(@RequestParam String nombre,
+                                                              @RequestParam String telefono) {
+        RespuestaEntity respuesta = new RespuestaEntity();
+        respuesta.setMensaje(friendServices.deleteFriend(nombre));
+        return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
-	
-	@RequestMapping(value = "/api/cumple", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @RequestMapping(value = "/api/cumple", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RespuestaEntity> borrarAmigo(@RequestParam String nombre) {
-		RespuestaEntity respuesta = new RespuestaEntity();
-		FriendServices friendServices = new FriendServices();
-		respuesta.setMensaje(friendServices.deleteFriend(nombre));
-        return new ResponseEntity<RespuestaEntity>(respuesta, HttpStatus.OK);
+        RespuestaEntity respuesta = new RespuestaEntity();
+        respuesta.setMensaje(friendServices.deleteFriend(nombre));
+        return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
 }
