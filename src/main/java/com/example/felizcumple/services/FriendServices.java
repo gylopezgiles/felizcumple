@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.felizcumple.entities.FriendEntity;
 import com.example.felizcumple.repositories.FriendsRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FriendServices {
 
 	@Autowired
@@ -25,12 +27,11 @@ public class FriendServices {
 	}
 	
 	public String deleteFriend(String name){
-		
 		return "Cumple borrado correctamente";
 	}
 	
 	public String updatePhone(String name, String phone){
-		FriendEntity friend = new FriendEntity();
+		FriendEntity friend;
 		friend = friendRepo.findFriendEntityByNombre(name);
 		friend.setTelefono(phone);
 		friendRepo.save(friend);
