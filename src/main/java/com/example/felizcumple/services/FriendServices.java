@@ -18,12 +18,15 @@ public class FriendServices {
 	FriendsRepository friendRepo;
 	
 	public String registerFriend(String name, String phone, String birthday) throws ParseException{
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-		Date date = formatter.parse(birthday);
-		FriendEntity friend = new FriendEntity(name, phone, date);
-		friendRepo.save(friend);
-		return "Cumple guardado correctamente";
+		String respuesta = validateData(name, phone, birthday);
+		if(respuesta == null){
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+			Date date = formatter.parse(birthday);
+			FriendEntity friend = new FriendEntity(name, phone, date);
+			friendRepo.save(friend);
+			respuesta = "Cumple guardado correctamente";
+		}
+		return respuesta;
 	}
 	
 	public String deleteFriend(String name){
@@ -36,5 +39,30 @@ public class FriendServices {
 		friend.setTelefono(phone);
 		friendRepo.save(friend);
 		return "Telefono actualizado correctamente";
+	}
+	
+	private String validateData(String name, String phone, String birthday){
+		if (name.isEmpty()){
+			return "No se puede guardar un cumpleaños con nombre vacio";
+		}
+		if (phone.isEmpty()){
+			return "No se puede guardar un cumpleaños con telefono vacio";
+		} else {
+			if(!phone.matches("[0-9]+")){
+				return "Numero de telefono inválido";
+			}
+		}
+		if (birthday.isEmpty()){
+			return "No se puede guardar un cumpleaños con fecha nacimiento vacio";
+		} else {
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+			try {
+				formatter.parse(birthday);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return "Formato de fecha incorrecto";
+			}
+		}
+		return null;
 	}
 }
